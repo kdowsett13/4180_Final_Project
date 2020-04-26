@@ -35,7 +35,7 @@ import argparse
 import time
 #this is for threads 
 import threading 
-#----------------this is for motor
+#------------------------------------------------------------------------------------------motors
 import RPi.GPIO as GPIO
 import time
 
@@ -116,7 +116,45 @@ def reverse(run_time):
     time.sleep(run_time)
     GPIO.output(STBY, GPIO.LOW) #stop
 
-#------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------sonar
+#set GPIO Pins
+GPIO_TRIGGER = 18
+GPIO_ECHO = 24
+ 
+#set GPIO direction (IN / OUT)
+GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
+GPIO.setup(GPIO_ECHO, GPIO.IN)
+dist=0#global distacle value
+
+def distance():
+    # set Trigger to HIGH
+    GPIO.output(GPIO_TRIGGER, True)
+ 
+    # set Trigger after 0.01ms to LOW
+    time.sleep(0.00001)
+    GPIO.output(GPIO_TRIGGER, False)
+ 
+    StartTime = time.time()
+    StopTime = time.time()
+ 
+    # save StartTime
+    while GPIO.input(GPIO_ECHO) == 0:
+        StartTime = time.time()
+ 
+    # save time of arrival
+    while GPIO.input(GPIO_ECHO) == 1:
+        StopTime = time.time()
+ 
+    # time difference between start and arrival
+    TimeElapsed = StopTime - StartTime
+    # multiply with the sonic speed (34300 cm/s)
+    # and divide by 2, because there and back
+    dist = (TimeElapsed * 34300) / 2
+ 
+    
+
+
+#------------------------------------------------------------------------------------------video
 # initialize the video stream and allow the camera sensor to warm up
 print("starting video stream..")
 #vs = VideoStream(src=0).start()# this is for testing with a web cam not in use. We didn't have anymore equipment
@@ -204,39 +242,42 @@ videoThread.start()
 
 
 #make the driving decisions  
-try:
-    while True:
+if __name__ == '__main__':
 
-        #go forward
-        go_forward(leg)
+    try:
+        while True:
+            print ("Measured Distance = %.1f cm" % dist)
 
-        #turn right?
-        turn_right(turn)
+            #go forward
+            go_forward(leg)
 
-        #go forward
-        go_forward(leg)
+            #turn right?
+            turn_right(turn)
 
-        #turn right?
-        turn_right(turn)
+            #go forward
+            go_forward(leg)
 
-        #go forward
-        go_forward(leg)
+            #turn right?
+            turn_right(turn)
 
-        #turn left
-        turn_left(turn)
+            #go forward
+            go_forward(leg)
 
-        #go forward
-        go_forward(leg)
+            #turn left
+            turn_left(turn)
 
-        #turn left
-        turn_left(turn)
+            #go forward
+            go_forward(leg)
 
-        #reverse
-        reverse(leg)
+            #turn left
+            turn_left(turn)
 
-except KeyboardInterrupt:
+            #reverse
+            reverse(leg)
 
-    GPIO.cleanup()
+    except KeyboardInterrupt:
+
+        GPIO.cleanup()
 
 
 
