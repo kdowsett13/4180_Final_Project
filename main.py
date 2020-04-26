@@ -150,6 +150,7 @@ def distance():
     # multiply with the sonic speed (34300 cm/s)
     # and divide by 2, because there and back
     dist = (TimeElapsed * 34300) / 2
+    print ("Measured Distance = %.1f cm" % dist)
  
     
 
@@ -221,8 +222,6 @@ def imageRec():
     except KeyboardInterrupt:
         destroy()
        
-def distance():
-    pass
 
 
 
@@ -231,9 +230,13 @@ def distance():
 #create threads
 videoThread = threading.Thread(target=imageRec) 
 
+distaceThread = threading.Thread(target=imageRec) 
+
 
 #starting the thread
 videoThread.start()
+
+distaceThread.start()
 
 
 
