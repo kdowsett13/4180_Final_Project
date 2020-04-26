@@ -22,7 +22,7 @@ time.sleep(2.0)
 
 from time import sleep
 import datetime
-from firebase import firebase
+#from firebase import firebase
 
 #import urllib2, urllib, httplib
 import json
@@ -72,7 +72,7 @@ def destroy():
     GPIO.output(pin, GPIO.HIGH)
     GPIO.cleanup() # Release resource
 
-
+count=1
 
 setup()
 # loop over the frames from the video stream
@@ -84,27 +84,27 @@ try:
             # find the barcodes in the frame and decode each of the barcodes
             barcodes = pyzbar.decode(frame)
                     # loop over the detected barcodes 
-            for barcode in bbarcodesarcodes:
-                    cv2.imwrite("frame%d.jpg" % count, frame)# this saves an image into local path
+            for barcode in barcodes:
+                cv2.imwrite("frame%d.jpg" % count, frame)# this saves an image into local path
                     
                     # extract the bounding box location of the barcode and draw
                     # the bounding box surrounding the barcode on the image
-                    (x, y, w, h) = barcode.rect
-                    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-                    # the barcode data is a bytes object so if we want to draw it
-                    # on our output image we need to convert it to a string first
-                    barcodeData = barcode.data.decode("utf-8")
-                    barcodeType = barcode.type
-                    # draw the barcode data and barcode type on the image
-                    text = "{} ({})".format(barcodeData, barcodeType)
-                    cv2.putText(frame, text, (x, y - 10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-                    # if the barcode text is currently not in our CSV file, write
-                    # the timestamp + barcode to disk and update the set
-                    if barcodeData not in found:
-                            csv.write("{},{}\n".format(datetime.datetime.now(),
-                                    barcodeData))
-                            csv.flush()
+                (x, y, w, h) = barcode.rect
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+                # the barcode data is a bytes object so if we want to draw it
+                # on our output image we need to convert it to a string first
+                barcodeData = barcode.data.decode("utf-8")
+                barcodeType = barcode.type
+                # draw the barcode data and barcode type on the image
+                text = "{} ({})".format(barcodeData, barcodeType)
+                cv2.putText(frame, text, (x, y - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+                # if the barcode text is currently not in our CSV file, write
+                # the timestamp + barcode to disk and update the set
+                print(barcodeData)  
+                #csv.write("{},{}\n".format(datetime.datetime.now(),barcodeData))
+                #csv.flush()
+            
                             
 
                             #print(barcodeData)
@@ -113,18 +113,14 @@ try:
                             #data = {"CodeString": barcodeData,"Date Recieved":datetime.datetime.now(),"UpdateMode":"off","status":"recieved"}
                             #firebase.post('/QRcodescanned', data)
                             
-                            beep(.2)# this beeps when we read a code
-                            print("ping")
+                beep(.2)# this beeps when we read a code
+                print("ping")
 
-                            #----firebase
-                            #we add the barcode to the fround set
-                            # found.add(barcodeData)
-                            #need to add a beep of something to let the person know we scanned
-                                    # show the output frame
+                            
              #this is just to put the window where we want it for testing                        
             windowName="Robot Cam"
             cv2.namedWindow(windowName)#name the window
-            cv2.moveWindow(windowName,1200,10)#move and create the window
+           # cv2.moveWindow(windowName,1200,10)#move and create the window
             cv2.imshow(windowName, frame)#display our window
             key = cv2.waitKey(1) & 0xFF # I added this to quit gracefully from keyboard
             #print(key)
