@@ -61,40 +61,40 @@ def imageRec():
     #wrapping it in a try loop incase the camera fails
     try:
         while True:
-                # grab the frame from the threaded video stream and resize it to  have a maximum width of 400 pixels
-                frame = vs.read()
-                frame = imutils.resize(frame, width=400)
-                # find the barcodes in the frame and decode each of the barcodes
-                barcodes = pyzbar.decode(frame)
-                # loop over the detected barcodes 
-                for barcode in barcodes:
-                    # extract the bounding box location of the barcode and draw
-                    # the bounding box surrounding the barcode on the image
-                    (x, y, w, h) = barcode.rect
-                    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-                    # the barcode data is a bytes object so if we want to draw it
-                    # on our output image we need to convert it to a string first
-                    barcodeData = barcode.data.decode("utf-8")
-                    barcodeType = barcode.type
-                    # draw the barcode data and barcode type on the image
-                    text = "{} ({})".format(barcodeData, barcodeType)
-                    cv2.putText(frame, text, (x, y - 10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-                    if barcodeData not in path:
-                      path.append(barcodeData)
-                      print(path)
-                    
+            # grab the frame from the threaded video stream and resize it to  have a maximum width of 400 pixels
+            frame = vs.read()
+            frame = imutils.resize(frame, width=400)
+            # find the barcodes in the frame and decode each of the barcodes
+            barcodes = pyzbar.decode(frame)
+            # loop over the detected barcodes 
+            for barcode in barcodes:
+                # extract the bounding box location of the barcode and draw
+                # the bounding box surrounding the barcode on the image
+                (x, y, w, h) = barcode.rect
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+                # the barcode data is a bytes object so if we want to draw it
+                # on our output image we need to convert it to a string first
+                barcodeData = barcode.data.decode("utf-8")
+                barcodeType = barcode.type
+                # draw the barcode data and barcode type on the image
+                text = "{} ({})".format(barcodeData, barcodeType)
+                cv2.putText(frame, text, (x, y - 10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+                if barcodeData not in path:
+                  path.append(barcodeData)
+                  print(path)
+                
 
-                                
-                #this is just to put the window where we want it for testing                        
-                windowName="Robot Cam"
-                cv2.namedWindow(windowName)#name the window
-                # cv2.moveWindow(windowName,1200,10)#move and create the window
-                cv2.imshow(windowName, frame)#display our window
-                key = cv2.waitKey(1) & 0xFF # I added this to quit gracefully from keyboard
-                #print(key)
-                # if the `q` key was pressed, break from the loop
-                if key == ord("q"):
-                        break
+                            
+            #this is just to put the window where we want it for testing                        
+            windowName="Robot Cam"
+            cv2.namedWindow(windowName)#name the window
+            # cv2.moveWindow(windowName,1200,10)#move and create the window
+            cv2.imshow(windowName, frame)#display our window
+            key = cv2.waitKey(1) & 0xFF # I added this to quit gracefully from keyboard
+            #print(key)
+            # if the `q` key was pressed, break from the loop
+            if key == ord("q"):
+                    break
         # close the output CSV file do a bit of cleanup
         print(path)
         print("cleaning up...")
