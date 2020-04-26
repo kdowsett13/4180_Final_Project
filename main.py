@@ -127,6 +127,7 @@ GPIO.setup(GPIO_ECHO, GPIO.IN)
 dist=0#global distacle value
 
 def distance():
+    
     # set Trigger to HIGH
     GPIO.output(GPIO_TRIGGER, True)
  
@@ -230,7 +231,7 @@ def imageRec():
 #create threads
 videoThread = threading.Thread(target=imageRec) 
 
-distaceThread = threading.Thread(target=imageRec) 
+distaceThread = threading.Thread(target=distance) 
 
 
 #starting the thread
@@ -245,42 +246,33 @@ distaceThread.start()
 
 
 #make the driving decisions  
-if __name__ == '__main__':
 
-    try:
-        while True:
-            print ("Measured Distance = %.1f cm" % dist)
+try:
+    while True:
+        
 
-            #go forward
-            go_forward(leg)
+        #go forward
+        go_forward(leg)
 
-            #turn right?
-            turn_right(turn)
 
-            #go forward
-            go_forward(leg)
+        #turn right?
+        turn_right(turn)
 
-            #turn right?
-            turn_right(turn)
+  
 
-            #go forward
-            go_forward(leg)
+        #turn left
+        turn_left(turn)
 
-            #turn left
-            turn_left(turn)
 
-            #go forward
-            go_forward(leg)
 
-            #turn left
-            turn_left(turn)
 
-            #reverse
-            reverse(leg)
 
-    except KeyboardInterrupt:
+        #reverse
+        reverse(leg)
 
-        GPIO.cleanup()
+except KeyboardInterrupt:
+
+    GPIO.cleanup()
 
 
 
