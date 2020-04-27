@@ -128,7 +128,7 @@ GPIO.setup(GPIO_ECHO, GPIO.IN)
 dist=0#global distacle value
 
 def distance():
-    while exit==False:
+    while exit == False:
         # set Trigger to HIGH
         GPIO.output(GPIO_TRIGGER, True)
      
@@ -140,11 +140,11 @@ def distance():
         StopTime = time.time()
      
         # save StartTime
-        while GPIO.input(GPIO_ECHO) == 0:
+        while GPIO.input(GPIO_ECHO) == 0 and exit == False:
             StartTime = time.time()
      
         # save time of arrival
-        while GPIO.input(GPIO_ECHO) == 1:
+        while GPIO.input(GPIO_ECHO) == 1 and exit == False:
             StopTime = time.time()
      
         # time difference between start and arrival
@@ -216,7 +216,6 @@ def imageRec():
         if key == ord("q"):
                 break
     # close the output CSV file do a bit of cleanup
-    print(path)
     print("cleaning up...")
     cv2.destroyAllWindows()
     vs.stop()#this kills the camera
@@ -251,7 +250,7 @@ try:
         
 
         #go forward
-        go_forward(leg)
+        #go_forward(leg)
 
 
         #turn right?
@@ -267,12 +266,15 @@ try:
 
 
         #reverse
-        reverse(leg)
+        #reverse(leg)
 
 except KeyboardInterrupt:
     exit=True
     videoThread.join()
+    print("thread vide done")
     distaceThread.join()
+    print("distance done")
+    print(path)
     GPIO.cleanup()
     print("Ok ok, quitting")
     sys.exit(1)

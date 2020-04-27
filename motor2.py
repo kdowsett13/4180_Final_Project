@@ -115,6 +115,6 @@ try:
         reverse(leg)
 
 except KeyboardInterrupt:
-
+    print("exit script")
     GPIO.cleanup()
 
