@@ -17,6 +17,7 @@ from pyzbar import pyzbar
 import datetime
 import imutils
 import cv2
+import sys
 
 from time import sleep
 import datetime
@@ -273,6 +274,8 @@ except KeyboardInterrupt:
     videoThread.join()
     distaceThread.join()
     GPIO.cleanup()
+    print("Ok ok, quitting")
+    sys.exit(1)
 
 
 
