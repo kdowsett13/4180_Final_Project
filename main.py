@@ -27,7 +27,7 @@ import json
 import os 
 from functools import partial
 
-
+exit = False
 
 #----------------
 #this is for time and passing arg
@@ -52,7 +52,7 @@ BIN1 = 32
 BIN2 = 36
 PWMB = 38
 
-GPIO.setmode(GPIO.BOARD) #use board pin numbers
+GPIO.setmode(GPIO.BCM)#use board pin numbers
 
 #set the GPIO's to outputs
 GPIO.setup(STBY, GPIO.OUT)
@@ -127,31 +127,32 @@ GPIO.setup(GPIO_ECHO, GPIO.IN)
 dist=0#global distacle value
 
 def distance():
-    
-    # set Trigger to HIGH
-    GPIO.output(GPIO_TRIGGER, True)
- 
-    # set Trigger after 0.01ms to LOW
-    time.sleep(0.00001)
-    GPIO.output(GPIO_TRIGGER, False)
- 
-    StartTime = time.time()
-    StopTime = time.time()
- 
-    # save StartTime
-    while GPIO.input(GPIO_ECHO) == 0:
+    while exit==False:
+        # set Trigger to HIGH
+        GPIO.output(GPIO_TRIGGER, True)
+     
+        # set Trigger after 0.01ms to LOW
+        time.sleep(0.00001)
+        GPIO.output(GPIO_TRIGGER, False)
+     
         StartTime = time.time()
- 
-    # save time of arrival
-    while GPIO.input(GPIO_ECHO) == 1:
         StopTime = time.time()
- 
-    # time difference between start and arrival
-    TimeElapsed = StopTime - StartTime
-    # multiply with the sonic speed (34300 cm/s)
-    # and divide by 2, because there and back
-    dist = (TimeElapsed * 34300) / 2
-    print ("Measured Distance = %.1f cm" % dist)
+     
+        # save StartTime
+        while GPIO.input(GPIO_ECHO) == 0:
+            StartTime = time.time()
+     
+        # save time of arrival
+        while GPIO.input(GPIO_ECHO) == 1:
+            StopTime = time.time()
+     
+        # time difference between start and arrival
+        TimeElapsed = StopTime - StartTime
+        # multiply with the sonic speed (34300 cm/s)
+        # and divide by 2, because there and back
+        dist = (TimeElapsed * 34300) / 2
+        print ("Measured Distance = %.1f cm" % dist)
+    
  
     
 
@@ -178,50 +179,48 @@ path= list()# global list so that we can keep track of the paths we are on
 
 def imageRec():
     #wrapping it in a try loop incase the camera fails
-    try:
-        while True:
-            # grab the frame from the threaded video stream and resize it to  have a maximum width of 400 pixels
-            frame = vs.read()
-            frame = imutils.resize(frame, width=400)
-            # find the barcodes in the frame and decode each of the barcodes
-            barcodes = pyzbar.decode(frame)
-            # loop over the detected barcodes 
-            for barcode in barcodes:
-                # extract the bounding box location of the barcode and draw
-                # the bounding box surrounding the barcode on the image
-                (x, y, w, h) = barcode.rect
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-                # the barcode data is a bytes object so if we want to draw it
-                # on our output image we need to convert it to a string first
-                barcodeData = barcode.data.decode("utf-8")
-                barcodeType = barcode.type
-                # draw the barcode data and barcode type on the image
-                text = "{} ({})".format(barcodeData, barcodeType)
-                cv2.putText(frame, text, (x, y - 10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-                if barcodeData not in path:
-                  path.append(barcodeData)
-                  print(path)
-                
+    while exit==False:
+        # grab the frame from the threaded video stream and resize it to  have a maximum width of 400 pixels
+        frame = vs.read()
+        frame = imutils.resize(frame, width=400)
+        # find the barcodes in the frame and decode each of the barcodes
+        barcodes = pyzbar.decode(frame)
+        # loop over the detected barcodes 
+        for barcode in barcodes:
+            # extract the bounding box location of the barcode and draw
+            # the bounding box surrounding the barcode on the image
+            (x, y, w, h) = barcode.rect
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            # the barcode data is a bytes object so if we want to draw it
+            # on our output image we need to convert it to a string first
+            barcodeData = barcode.data.decode("utf-8")
+            barcodeType = barcode.type
+            # draw the barcode data and barcode type on the image
+            text = "{} ({})".format(barcodeData, barcodeType)
+            cv2.putText(frame, text, (x, y - 10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+            if barcodeData not in path:
+              path.append(barcodeData)
+              print(path)
+            
 
-                            
-            #this is just to put the window where we want it for testing                        
-            windowName="Robot Cam"
-            cv2.namedWindow(windowName)#name the window
-            # cv2.moveWindow(windowName,1200,10)#move and create the window
-            cv2.imshow(windowName, frame)#display our window
-            key = cv2.waitKey(1) & 0xFF # I added this to quit gracefully from keyboard
-            #print(key)
-            # if the `q` key was pressed, break from the loop
-            if key == ord("q"):
-                    break
-        # close the output CSV file do a bit of cleanup
-        print(path)
-        print("cleaning up...")
-        cv2.destroyAllWindows()
-        vs.stop()#this kills the camera
+                        
+        #this is just to put the window where we want it for testing                        
+        windowName="Robot Cam"
+        cv2.namedWindow(windowName)#name the window
+        # cv2.moveWindow(windowName,1200,10)#move and create the window
+        cv2.imshow(windowName, frame)#display our window
+        key = cv2.waitKey(1) & 0xFF # I added this to quit gracefully from keyboard
+        #print(key)
+        # if the `q` key was pressed, break from the loop
+        if key == ord("q"):
+                break
+    # close the output CSV file do a bit of cleanup
+    print(path)
+    print("cleaning up...")
+    cv2.destroyAllWindows()
+    vs.stop()#this kills the camera
 
-    except KeyboardInterrupt:
-        destroy()
+    
        
 
 
@@ -236,7 +235,6 @@ distaceThread = threading.Thread(target=distance)
 
 #starting the thread
 videoThread.start()
-
 distaceThread.start()
 
 
@@ -256,12 +254,12 @@ try:
 
 
         #turn right?
-        turn_right(turn)
+        #turn_right(turn)
 
   
 
         #turn left
-        turn_left(turn)
+        #turn_left(turn)
 
 
 
@@ -271,7 +269,9 @@ try:
         reverse(leg)
 
 except KeyboardInterrupt:
-
+    exit=True
+    videoThread.join()
+    distaceThread.join()
     GPIO.cleanup()
 
 
