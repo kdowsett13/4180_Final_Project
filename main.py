@@ -53,7 +53,7 @@ BIN1 = 32
 BIN2 = 36
 PWMB = 38
 
-GPIO.setmode(GPIO.BCM)#use board pin numbers
+GPIO.setmode(GPIO.BOARD)#use board pin numbers
 
 #set the GPIO's to outputs
 GPIO.setup(STBY, GPIO.OUT)
@@ -119,8 +119,8 @@ def reverse(run_time):
 
 #------------------------------------------------------------------------------------------sonar
 #set GPIO Pins
-GPIO_TRIGGER = 18
-GPIO_ECHO = 24
+GPIO_TRIGGER = 12
+GPIO_ECHO = 18
  
 #set GPIO direction (IN / OUT)
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
