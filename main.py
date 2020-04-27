@@ -41,8 +41,8 @@ import RPi.GPIO as GPIO
 import time
 
 #a couple of delay constants time to 
-leg = 1# this tells me to keep it on 
-turn = 0.5# how long the motors are on
+leg = 5# this tells me to keep it on 
+turn = 0.75# how long the motors are on
 
 #set up control pins for motor driver
 STBY = 31
@@ -116,6 +116,7 @@ def reverse(run_time):
     GPIO.output(STBY, GPIO.HIGH) #start
     time.sleep(run_time)
     GPIO.output(STBY, GPIO.LOW) #stop
+
 
 #------------------------------------------------------------------------------------------sonar
 #set GPIO Pins
@@ -250,23 +251,28 @@ try:
         
 
         #go forward
-        #go_forward(leg)
+        go_forward(leg)
+	time.sleep(5)
 
 
         #turn right?
         #turn_right(turn)
+	#time.sleep(6)
+	
 
   
 
         #turn left
         #turn_left(turn)
+	#time.sleep(6)
 
 
 
 
 
         #reverse
-        #reverse(leg)
+        reverse(leg)
+	time.sleep(5)
 
 except KeyboardInterrupt:
     exit=True
@@ -277,7 +283,7 @@ except KeyboardInterrupt:
     print(path)
     GPIO.cleanup()
     print("Ok ok, quitting")
-    sys.exit(1)
+    #sys.exit(1)
 
 
 
