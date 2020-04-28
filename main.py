@@ -256,7 +256,7 @@ stage_three=False
 #make the driving decisions  
 avg=0
 tick=0
-home=false
+home=False
 try:
     while True:
         
