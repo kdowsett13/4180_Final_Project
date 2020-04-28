@@ -311,6 +311,7 @@ try:
          #--------------------------------------------
         if stage_three == True:#final stage we are going home
             print("stage 3")
+            print(dist)
             if dist > 30 and dist < 0:
                 go_forward(leg)
             else:
