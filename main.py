@@ -291,6 +291,7 @@ try:
         #--------------------------------------------
         if stage_two == True:
             print("stage2")
+            print(dist)
 
    
             if dist  > 30 or dist < 0 :# if nothing is in path move fwr
