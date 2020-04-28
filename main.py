@@ -341,7 +341,16 @@ except KeyboardInterrupt:
     print("Ok ok, quitting")
     #sys.exit(1)
 
-
+finally:
+    exit=True
+    videoThread.join()
+    print("thread vide done")
+    distaceThread.join()
+    print("distance done")
+    print(path)
+    GPIO.cleanup()
+    print("finall out")
+    #sys.exit(1)
 
 
 
