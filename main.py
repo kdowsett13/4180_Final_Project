@@ -279,10 +279,12 @@ try:
                 for x in xrange(1,10):
                     avg+=dist
                     time.sleep(0.5)
+                avg=avg/10
+
 
 
                 print("dist",dist)
-                print ("Measured AVG = %.1f cm" % (avg/10) )
+                print ("Measured AVG = %.1f cm" % (avg) )
                 if (avg/10) < 10 and (avg/10) > 0:
                     stage_one=False
                     stage_two=True
