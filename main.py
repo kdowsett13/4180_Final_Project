@@ -257,21 +257,31 @@ try:
     while True:
         
         #--------------------------------------------
-        print(dist  > 10)
-        print(dist)
+        
         while (len(path)==0 or dist < 30):
             stage_one=True
-            print(dist)
 
         print("this is len",len(path))
         if stage_one == True:
-            if dist  > 30:#this lets us move fwr is nothing has been found in path
+            print("stage one")
+            if dist  > 30 :#this lets us move fwr is nothing has been found in path
                 go_forward(leg)
             else:
-                stage_one=False
-                stage_two=True
+                #take 15 samples of distance to make sure something is there 
+                for x in xrange(1,10):
+                    avg+=dist
+                print ("Measured Distance = %.1f cm" % avg)
+                if avg/10 < 30:
+                    stage_one=False
+                    stage_two=True
+                    stage_three=False
+
+
+
+                
         #--------------------------------------------
         if stage_two == True:
+            print("stage2")
             if dist > 30:
                 #add a possible shake here 
                 go_forward(leg)
