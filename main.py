@@ -256,17 +256,18 @@ avg=0
 tick=0
 try:
     while True:
-        
+        global tick
         #--------------------------------------------
         
         while (len(path)==0 ):
             stage_one=True
         if len(path)==1 and tick ==0:
-            time.sleep(10)
+            time.sleep(5)
             tick=1
+            print("tick",tick)
 
 
-         
+
         print("this is len",len(path))
         if stage_one == True:
             print("stage one")
