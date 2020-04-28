@@ -256,6 +256,7 @@ stage_three=False
 #make the driving decisions  
 avg=0
 tick=0
+home=false
 try:
     while True:
         
@@ -312,7 +313,7 @@ try:
         if stage_three == True:#final stage we are going home
             print("stage 3")
             print(dist)
-            if dist > 30 and dist < 0:
+            if dist > 30 and dist < 0 and home==False:
                 go_forward(leg)
             else:
                 #might add a while loop to read the QR code
@@ -320,6 +321,7 @@ try:
                 turn_right(.2)
                 turn_left(.2)
                 print("home")
+                home=True
 
 
 except KeyboardInterrupt:
