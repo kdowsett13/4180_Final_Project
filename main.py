@@ -281,7 +281,7 @@ try:
                     time.sleep(0.5)
 
 
-                print("avg",(avg/10))
+                print("avg",dist)
                 print ("Measured AVG = %.1f cm" % (avg/10) )
                 if (avg/10) < 10 and (avg/10) > 0:
                     stage_one=False
