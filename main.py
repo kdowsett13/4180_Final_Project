@@ -256,19 +256,20 @@ avg=0
 tick=0
 try:
     while True:
-        global tick
+        
         #--------------------------------------------
         
         while (len(path)==0 ):
             stage_one=True
+            print("in whi 1")
         if len(path)==1 and tick ==0:
-            time.sleep(5)
+            time.sleep(10)
             tick=1
             print("tick",tick)
 
 
 
-        print("this is len",len(path))
+        #print("this is len",len(path))
         if stage_one == True:
             print("stage one")
             if dist  > 30 :#this lets us move fwr is nothing has been found in path
@@ -305,8 +306,10 @@ try:
                     turn_left(turn)
                 elif path[0]=="right":#this checks if need to turn right
                     turn_right(turn)
+
+         #--------------------------------------------
         if stage_three == True:#final stage we are going home
-            stage
+            print("stage 3")
             if dist > 30:
                 go_forward(leg)
             else:
