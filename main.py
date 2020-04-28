@@ -292,15 +292,13 @@ try:
         if stage_two == True:
             print("stage2")
 
-            for x in xrange(1,10):
-                    avg+=dist
-            print("avg",(avg/10))
-            if (avg/10)  > 30 or (avg/10) < 0:# if nothing is in path move fwr
+   
+            if dist  > 30 or dist < 0 :# if nothing is in path move fwr
                 #add a possible shake here 
                 go_forward(leg)
-            else:
+            else:#this goes in when we hit the wall
                 while len(path)<2:
-                    print("w2")
+                    print("in stg2 scan 2 QR")
 
                     stage_two=False
                     stage_three=True
@@ -312,13 +310,14 @@ try:
          #--------------------------------------------
         if stage_three == True:#final stage we are going home
             print("stage 3")
-            if dist > 30:
+            if dist > 30 and dist < 0:
                 go_forward(leg)
             else:
                 #might add a while loop to read the QR code
                 #we are home so we shake 
                 turn_right(.2)
                 turn_left(.2)
+                print("home")
 
 
 except KeyboardInterrupt:
