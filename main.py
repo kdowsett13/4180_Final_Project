@@ -278,6 +278,8 @@ try:
                 #take 15 samples of distance to make sure something is there 
                 for x in xrange(1,10):
                     avg+=dist
+                    time.sleep(0.5)
+
 
                 print("avg",(avg/10))
                 print ("Measured AVG = %.1f cm" % (avg/10) )
