@@ -159,6 +159,8 @@ def distance():
         dist = (TimeElapsed * 34300) / 2
         lock.release()
         #print ("Measured Distance = %.1f cm" % dist)
+        time.sleep(1)
+
     
  
     
@@ -276,16 +278,18 @@ try:
                 go_forward(leg)
             else:
                 #take 15 samples of distance to make sure something is there 
+                '''
                 for x in xrange(1,10):
                     avg+=dist
                     time.sleep(0.5)
                 avg=avg/10
+                '''
 
 
 
                 print("dist",dist)
-                print ("Measured AVG = %.1f cm" % (avg) )
-                if (avg/10) < 10 and (avg/10) > 0:
+               
+                if dist < 10 and dist > 0:
                     stage_one=False
                     stage_two=True
                     stage_three=False
