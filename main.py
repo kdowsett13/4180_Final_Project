@@ -281,7 +281,7 @@ try:
 
                 print("avg",(avg/10))
                 print ("Measured AVG = %.1f cm" % (avg/10) )
-                if avg/10 < 30:
+                if avg/10 < 10:
                     stage_one=False
                     stage_two=True
                     stage_three=False
@@ -292,9 +292,10 @@ try:
         #--------------------------------------------
         if stage_two == True:
             print("stage2")
+
             for x in xrange(1,10):
                     avg+=dist
-
+            print("avg",(avg/10))
             if (avg/10)  > 30:
                 #add a possible shake here 
                 go_forward(leg)
