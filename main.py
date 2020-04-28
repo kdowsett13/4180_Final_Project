@@ -41,8 +41,8 @@ import RPi.GPIO as GPIO
 import time
 
 #a couple of delay constants time to 
-leg = 5# this tells me to keep it on 
-turn = 0.75# how long the motors are on
+leg = .33# this tells me to keep it on 
+turn = 0.33# how long the motors are on
 
 #set up control pins for motor driver
 STBY = 31
@@ -138,16 +138,17 @@ def distance():
         GPIO.output(GPIO_TRIGGER, False)
      
         StartTime = time.time()
-        StopTime = time.time()
-     
+        count = time.time()
+        StopTime=time.time()
         # save StartTime
-        while GPIO.input(GPIO_ECHO) == 0 and exit == False:
+        while GPIO.input(GPIO_ECHO) == 0 and time.time()-count<0.1  and exit == False:
             StartTime = time.time()
+            #print("first",time.time()-count)
      
         # save time of arrival
-        while GPIO.input(GPIO_ECHO) == 1 and exit == False:
+        while GPIO.input(GPIO_ECHO) == 1  and exit == False:
             StopTime = time.time()
-     
+            #print("second", time.time()-StopTime)
         # time difference between start and arrival
         TimeElapsed = StopTime - StartTime
         # multiply with the sonic speed (34300 cm/s)
@@ -251,28 +252,25 @@ try:
         
 
         #go forward
-        go_forward(leg)
-	time.sleep(5)
+        #go_forward(leg)
+	#time.sleep(5)
 
 
         #turn right?
-        #turn_right(turn)
-	#time.sleep(6)
-	
-
-  
+        turn_right(turn)
+	time.sleep(5)
 
         #turn left
-        #turn_left(turn)
-	#time.sleep(6)
+        turn_left(turn)
+	time.sleep(5)
 
 
 
 
 
         #reverse
-        reverse(leg)
-	time.sleep(5)
+        #reverse(leg)
+	#time.sleep(5)
 
 except KeyboardInterrupt:
     exit=True

@@ -5,9 +5,9 @@ import RPi.GPIO as GPIO
 import time
 
 #a couple of delay constants
-leg = 2
-turn = 0.5
-
+leg =.33
+turn = 0.33
+GPIO.cleanup()
 #set up control pins for motor driver
 STBY = 31
 AIN1 = 33
@@ -89,31 +89,31 @@ try:
 
         #go forward
         go_forward(leg)
+        print("run")
+        #turn right?
+        #turn_right(turn)
+
+        #go forward
+        #go_forward(leg)
 
         #turn right?
-        turn_right(turn)
-
+        #turn_right(turn)
+        time.sleep(2)
         #go forward
-        go_forward(leg)
-
-        #turn right?
-        turn_right(turn)
-
-        #go forward
-        go_forward(leg)
+        #go_forward(leg)
 
         #turn left
-        turn_left(turn)
-
+        #turn_left(turn)
+        #time.sleep(2)
         #go forward
-        go_forward(leg)
+        #go_forward(leg)
 
         #turn left
-        turn_left(turn)
+        #turn_left(turn)
 
         #reverse
         reverse(leg)
-
+        time.sleep(2)
 except KeyboardInterrupt:
     print("exit script")
     GPIO.cleanup()
