@@ -35,7 +35,8 @@ exit = False
 import argparse
 import time
 #this is for threads 
-import threading 
+import threading
+from threading  import Lock,Thread
 #------------------------------------------------------------------------------------------motors
 import RPi.GPIO as GPIO
 import time
@@ -127,9 +128,10 @@ GPIO_ECHO = 18
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 dist=0#global distacle value
-
+lock = Lock()
 def distance():
     while exit == False:
+        global dist
         # set Trigger to HIGH
         GPIO.output(GPIO_TRIGGER, True)
      
@@ -153,8 +155,10 @@ def distance():
         TimeElapsed = StopTime - StartTime
         # multiply with the sonic speed (34300 cm/s)
         # and divide by 2, because there and back
+        lock.acquire()
         dist = (TimeElapsed * 34300) / 2
-        print ("Measured Distance = %.1f cm" % dist)
+        lock.release()
+        #print ("Measured Distance = %.1f cm" % dist)
     
  
     
@@ -251,11 +255,15 @@ stage_three=False
 
 try:
     while True:
+        
         #--------------------------------------------
-        while len(path)<1:
+        print(dist  > 10)
+        print(dist)
+        while (len(path)==0 or dist < 30):
             stage_one=True
+            print(dist)
 
-
+        print("this is len",len(path))
         if stage_one == True:
             if dist  > 30:#this lets us move fwr is nothing has been found in path
                 go_forward(leg)
