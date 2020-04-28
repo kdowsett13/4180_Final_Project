@@ -257,8 +257,9 @@ stage_three=False
 avg=0
 tick=0
 home=False
+out=True
 try:
-    while True:
+    while out:
         
         #--------------------------------------------
         
@@ -306,8 +307,10 @@ try:
                     stage_three=True
                 if path[0]== "left":#this checks if the first scanns 
                     turn_left(turn)
+                    time.sleep(10)
                 elif path[0]=="right":#this checks if need to turn right
                     turn_right(turn)
+                    time.sleep(10)
 
          #--------------------------------------------
         if stage_three == True:#final stage we are going home
@@ -318,10 +321,13 @@ try:
             else:
                 #might add a while loop to read the QR code
                 #we are home so we shake 
-                turn_right(.2)
-                turn_left(.2)
+                turn_right(2)
+                turn_left(2)
                 print("home")
-                home=True
+                home=True#we made it home 
+                stage_three=False#we exit stage 3
+                out=False#this is we are done 
+
 
 
 except KeyboardInterrupt:
