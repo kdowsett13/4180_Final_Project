@@ -258,8 +258,10 @@ try:
         
         #--------------------------------------------
         
-        while (len(path)==0 or dist < 30):
+        while (len(path)==0 ):
             stage_one=True
+
+        time.sleep(2)
 
         print("this is len",len(path))
         if stage_one == True:
