@@ -281,7 +281,7 @@ try:
 
                 print("avg",(avg/10))
                 print ("Measured AVG = %.1f cm" % (avg/10) )
-                if avg/10 < 10:
+                if (avg/10) < 10 and (avg/10) > 0:
                     stage_one=False
                     stage_two=True
                     stage_three=False
@@ -296,11 +296,13 @@ try:
             for x in xrange(1,10):
                     avg+=dist
             print("avg",(avg/10))
-            if (avg/10)  > 30:
+            if (avg/10)  > 30 or (avg/10) < 0:# if nothing is in path move fwr
                 #add a possible shake here 
                 go_forward(leg)
             else:
                 while len(path)<2:
+                    print("w2")
+
                     stage_two=False
                     stage_three=True
                 if path[0]== "left":#this checks if the first scanns 
