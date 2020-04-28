@@ -252,7 +252,7 @@ stage_three=False
 
 
 #make the driving decisions  
-
+avg=0
 try:
     while True:
         
@@ -270,7 +270,7 @@ try:
                 #take 15 samples of distance to make sure something is there 
                 for x in xrange(1,10):
                     avg+=dist
-                print ("Measured Distance = %.1f cm" % avg)
+                print ("Measured AVG = %.1f cm" % avg/10 )
                 if avg/10 < 30:
                     stage_one=False
                     stage_two=True
@@ -282,7 +282,10 @@ try:
         #--------------------------------------------
         if stage_two == True:
             print("stage2")
-            if dist > 30:
+            for x in xrange(1,10):
+                    avg+=dist
+
+            if avg/10  > 30:
                 #add a possible shake here 
                 go_forward(leg)
             else:
@@ -294,6 +297,7 @@ try:
                 elif path[0]=="right":#this checks if need to turn right
                     turn_right(turn)
         if stage_three == True:#final stage we are going home
+            stage
             if dist > 30:
                 go_forward(leg)
             else:
