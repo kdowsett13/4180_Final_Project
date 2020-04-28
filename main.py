@@ -273,21 +273,12 @@ try:
 
         #print("this is len",len(path))
         if stage_one == True:
-            print("stage one")
+            print("st1 out dist",dist)
             if dist  > 30 :#this lets us move fwr is nothing has been found in path
                 go_forward(leg)
+                print("stage one fwr")
             else:
-                #take 15 samples of distance to make sure something is there 
-                '''
-                for x in xrange(1,10):
-                    avg+=dist
-                    time.sleep(0.5)
-                avg=avg/10
-                '''
-
-
-
-                print("dist",dist)
+                print("str else dist",dist)
                
                 if dist < 10 and dist > 0:
                     stage_one=False
