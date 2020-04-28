@@ -242,35 +242,48 @@ distaceThread.start()
 
 
 
-
+stage_one=False
+stage_two=False
+stage_three=False
 
 
 #make the driving decisions  
 
 try:
     while True:
-        
-
-        #go forward
-        #go_forward(leg)
-	#time.sleep(5)
+        #--------------------------------------------
+        while len(path)<1:
+            stage_one=True
 
 
-        #turn right?
-        turn_right(turn)
-	time.sleep(5)
+        if stage_one == True:
+            if dist  > 30:#this lets us move fwr is nothing has been found in path
+                go_forward(leg)
+            else:
+                stage_one=False
+                stage_two=True
+        #--------------------------------------------
+        if stage_two == True:
+            if dist > 30:
+                #add a possible shake here 
+                go_forward(leg)
+            else:
+                while len(path)<2:
+                    stage_two=False
+                    stage_three=True
+                if path[0]== "left":#this checks if the first scanns 
+                    turn_left(turn)
+                elif path[0]=="right":#this checks if need to turn right
+                    turn_right(turn)
+        if stage_three == True:#final stage we are going home
+            if dist > 30:
+                go_forward(leg)
+            else:
+                #might add a while loop to read the QR code
+                #we are home so we shake 
+                turn_right(.2)
+                turn_left(.2)
 
-        #turn left
-        turn_left(turn)
-	time.sleep(5)
-
-
-
-
-
-        #reverse
-        #reverse(leg)
-	#time.sleep(5)
 
 except KeyboardInterrupt:
     exit=True
