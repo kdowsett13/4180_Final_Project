@@ -265,7 +265,7 @@ try:
         
         while (len(path)==0 ):
             stage_one=True
-            print("in whi 1")
+            print("Scann QR one ")
         if len(path)==1 and tick ==0:
             time.sleep(10)
             tick=1
