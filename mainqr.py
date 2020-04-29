@@ -162,14 +162,14 @@ GPIO.setup(PWMB, GPIO.OUT)
 #set initial condiions, STBY
 #is low, so no motors running
 GPIO.output(STBY, GPIO.LOW)
-
+#Defining PWM
 GPIO.output(AIN1, GPIO.HIGH)
 GPIO.output(AIN2, GPIO.LOW)
-GPIO.output(PWMA, GPIO.HIGH)
+GPIO.PWM(PWMA, 100)
 
 GPIO.output(BIN1, GPIO.HIGH)
 GPIO.output(BIN2, GPIO.LOW)
-GPIO.output(PWMB, GPIO.HIGH)
+GPIO.PWM(PWMB, 1)
 
 #go into their own library, ultimately.
 def go_forward(run_time):
@@ -264,8 +264,8 @@ def distance():
 # initialize the video stream and allow the camera sensor to warm up
 print("starting video stream..")
 #vs = VideoStream(src=0).start()# this is for testing with a web cam not in use. We didn't have anymore equipment
-vs = VideoStream(usePiCamera=True).start()
-time.sleep(2.0)
+#vs = VideoStream(usePiCamera=True).start()
+#time.sleep(2.0)
 
 #------------------------------------------------------------------------------------------
    
