@@ -357,16 +357,35 @@ try:
     while out:
       data = raw_input("What's your profession?")
       if data=="a":
-        turn_left(.01)
+        turn_left(.05)
+	turn_left(.05)
       if data=="d":
-        turn_right(.01)
+        turn_right(.05)
+	turn_right(.05)
+
       if data=="w":
-        go_forward(1)
+        go_forward(.1)
+        go_forward(.1)
       if data == "h":
         turn_right(1)
         turn_left(1)
       if data == "o":
         out=False
+      if data == "q":
+        go_forward(.1)
+        turn_left(.01)
+        go_forward(.1)
+        turn_left(.01)
+      if data=="r":
+	light=[0,1,0,1,1,1,0,0,1,1,1,0]
+	l=[0,3,6,9]
+	  for a in l:
+	    GPIO.output(Blue,light[a])
+	    GPIO.output(Green,light[a+1])
+	    GPIO.output(Red,light[a+2])
+	    print(light[a],light[a+1],light[a+2])
+	    time.sleep(2)
+	
 
 
 		 
