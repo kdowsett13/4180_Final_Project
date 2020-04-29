@@ -1,7 +1,7 @@
 # coding: utf-8
 import RPi.GPIO as GPIO   #import the GPIO library
 import time               #import the time library
-GPIO.cleanup()
+
 class Buzzer(object):
  def __init__(self):
   GPIO.setmode(GPIO.BOARD)  
@@ -79,6 +79,8 @@ class Buzzer(object):
   GPIO.setup(self.buzzer_pin, GPIO.IN)
 
 if __name__ == "__main__":
-  a = input("Enter Tune number 1-5:")
+  audio= [1,5,2,4,3]
   buzzer = Buzzer()
-  buzzer.play(int(a))
+  for a in audio:
+    buzzer.play(int(a))
+  
