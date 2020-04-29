@@ -373,7 +373,7 @@ try:
         #print("this is len",len(path))
         if stage_one == True:
             print("st1 out dist",dist)
-            if dist  > 30 :#this lets us move fwr is nothing has been found in path
+            if dist  > 40 :#this lets us move fwr is nothing has been found in path
                 go_forward(leg)
                 print("stage one fwr")
             else:
@@ -393,7 +393,7 @@ try:
             print(dist)
 
    
-            if dist  > 30 or dist < 0 :# if nothing is in path move fwr
+            if dist  > 40 or dist < 0 :# if nothing is in path move fwr
                 #add a possible shake here 
                 go_forward(leg)
             else:#this goes in when we hit the wall
@@ -417,7 +417,7 @@ try:
         if stage_three == True:#final stage we are going home
             print("stage 3")
             print(dist)
-            if dist > 30 and dist < 0 and home==False:
+            if dist > 40 and dist < 0 and home==False:
                 go_forward(leg)
             else:
                 #might add a while loop to read the QR code
