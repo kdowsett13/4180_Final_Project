@@ -356,12 +356,20 @@ home=False
 out=True
 try:
     while out:
-	
+      data = raw_input("What's your profession?")
+      if data=="l":
+        turn_left(turn)
+      if data=="r":
+        turn_right(turn)
+      if data=="f":
+        go_forward(leg)
+      if data == "h":
+        turn_right(1)
+        turn_left(1)
+      if data == "o":
+        out=False
 
-	#Saving raw_input() call into a variable prof
-	data = raw_input("What's your profession?")
-        
-        if data=="l":
+
 		 
     light=[0,1,0,1,1,1,0,0,1,1,1,0]
     l=[0,3,6,9]
