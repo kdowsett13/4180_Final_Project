@@ -375,7 +375,7 @@ try:
         #print("this is len",len(path))
         if stage_one == True:
             print("st1 out dist",dist)
-            if dist  > 30 :#this lets us move fwr is nothing has been found in path
+            if dist  > 30 or dist < 0 :#this lets us move fwr is nothing has been found in path
                 go_forward(leg)
                 print("stage one fwr")
             else:
