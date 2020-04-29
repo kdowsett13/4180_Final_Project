@@ -42,7 +42,7 @@ import RPi.GPIO as GPIO
 import time
 
 #a couple of delay constants time to 
-leg = .2# this tells me to keep it on 
+leg = .1# this tells me to keep it on 
 turn = 0.33# how long the motors are on
 
 #set up control pins for motor driver
@@ -330,13 +330,13 @@ def imageRec():
 
 
 #create threads
-videoThread = threading.Thread(target=imageRec) 
+#videoThread = threading.Thread(target=imageRec) 
 
 distaceThread = threading.Thread(target=distance) 
 
 
 #starting the thread
-videoThread.start()
+#videoThread.start()
 distaceThread.start()
 
 
@@ -444,7 +444,7 @@ try:
 
 except KeyboardInterrupt:
     exit=True
-    videoThread.join()
+    #videoThread.join()
     print("thread vide done")
     distaceThread.join()
     print("distance done")
@@ -455,7 +455,7 @@ except KeyboardInterrupt:
 
 finally:
     exit=True
-    videoThread.join()
+    #videoThread.join()
     print("thread vide done")
     distaceThread.join()
     print("distance done")
