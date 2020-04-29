@@ -420,7 +420,7 @@ try:
             print("stage 3")
             print(dist)
             print(home)
-            if dist > 30 and dist < 0 and home==False:
+            if dist > 30 or dist < 0 and home==False:
                 go_forward(leg)
                 print("fwr")
                 
