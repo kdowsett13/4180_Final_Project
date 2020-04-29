@@ -345,7 +345,7 @@ distaceThread.start()
 
 
 stage_one=False
-stage_two=False
+stage_two=True
 stage_three=False
 
 
@@ -360,7 +360,7 @@ try:
         #--------------------------------------------
         
         while (len(path)==0 ):
-            stage_one=True
+            stage_one=False
             print("Scann QR one ")
             if len(path)==0 :
               time.sleep(.01)
