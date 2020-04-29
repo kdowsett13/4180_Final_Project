@@ -42,7 +42,7 @@ import RPi.GPIO as GPIO
 import time
 
 #a couple of delay constants time to 
-leg = .33# this tells me to keep it on 
+leg = .2# this tells me to keep it on 
 turn = 0.33# how long the motors are on
 
 #set up control pins for motor driver
