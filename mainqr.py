@@ -43,7 +43,7 @@ import time
 
 #a couple of delay constants time to 
 leg = .01# this tells me to keep it on 
-turn = 0.33# how long the motors are on
+turn = 0.29# how long the motors are on
 
 #set up control pins for motor driver
 STBY = 31
@@ -141,11 +141,11 @@ class Buzzer(object):
 
 #--------------------end audio 
 GPIO.setup(Blue,GPIO.OUT)
-GPIO.output(Blue,1)
+GPIO.output(Blue,0)
 GPIO.setup(Green,GPIO.OUT)
-GPIO.output(Green,1)
+GPIO.output(Green,0)
 GPIO.setup(Red,GPIO.OUT)
-GPIO.output(Red,1)
+GPIO.output(Red,0)
 
 
 
@@ -183,7 +183,7 @@ def go_forward(run_time):
     GPIO.output(STBY, GPIO.HIGH) #start
     time.sleep(run_time)
     GPIO.output(STBY, GPIO.LOW) #stop
-    time.sleep(.04)
+    time.sleep(.03)
 def turn_left(run_time):
     GPIO.output(AIN1, GPIO.HIGH)
     GPIO.output(AIN2, GPIO.LOW)
@@ -360,6 +360,7 @@ try:
         #--------------------------------------------
         
         while (len(path)==0 ):
+	    GPIO.output(Red,1)
             stage_one=False
             print("Scann QR one ")
             if len(path)==0 :
@@ -374,6 +375,8 @@ try:
 
         #print("this is len",len(path))
         if stage_one == True:
+	    GPIO.output(Red,0)
+	    GPIO.output(Blue,1)
             print("st1 out dist",dist)
             if dist  > 30 or dist < 0 :#this lets us move fwr is nothing has been found in path
                 go_forward(leg)
@@ -393,11 +396,15 @@ try:
         if stage_two == True:
             print("stage2")
             print(dist)
-
-   
+	    GPIO.output(Green,0)
+	    GPIO.output(Blue,1)
+	    GPIO.output(Red,0) 
+	    #buzzer = Buzzer()
+	    #buzzer.play(3)  
             if dist  > 30 or dist < 0 :# if nothing is in path move fwr
                 #add a possible shake here 
                 go_forward(leg)
+		#time.sleep(.03)
             elif dist < 30 and dist > 0:#this goes in when we hit the wall
                 while len(path)<2:
                     print("in stg2 scan 2 QR")
@@ -405,15 +412,15 @@ try:
                     stage_two=False
                     stage_three=True
                     if len(path)==1 :
-                      time.sleep(5)
+                      time.sleep(2)
                       path.append("stop sign")
 
                 if path[0]== "left":#this checks if the first scanns 
                     turn_left(turn)
-                    time.sleep(10)
+                    time.sleep(2)
                 elif path[0]=="right":#this checks if need to turn right
                     turn_right(turn)
-                    time.sleep(10)
+                    time.sleep(2)
 
          #--------------------------------------------
         if stage_three == True:#final stage we are going home
@@ -423,12 +430,13 @@ try:
             if dist > 30 or dist < 0 and home==False:
                 go_forward(leg)
                 print("fwr")
+		time.sleep(.02)
                 
             elif dist < 30 and dist > 0:
                 #might add a while loop to read the QR code
                 #we are home so we shake 
-                turn_right(2)
-                turn_left(2)
+                turn_right(.02)
+                turn_left(.02)
                 print("home")
                 home=True#we made it home 
                 stage_three=False#we exit stage 3
