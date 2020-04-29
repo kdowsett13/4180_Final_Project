@@ -1,10 +1,11 @@
-mport RPi.GPIO as GPIO   #import the GPIO library
+# coding: utf-8
+import RPi.GPIO as GPIO   #import the GPIO library
 import time               #import the time library
-
+GPIO.cleanup()
 class Buzzer(object):
  def __init__(self):
-  GPIO.setmode(GPIO.BCM)  
-  self.buzzer_pin = 5 #set to GPIO pin 5
+  GPIO.setmode(GPIO.BOARD)  
+  self.buzzer_pin = 29 #set to GPIO pin 5
   GPIO.setup(self.buzzer_pin, GPIO.IN)
   GPIO.setup(self.buzzer_pin, GPIO.OUT)
   print("buzzer ready")
@@ -29,7 +30,7 @@ class Buzzer(object):
    time.sleep(delay)    #wait with pin 18 low
 
  def play(self, tune):
-  GPIO.setmode(GPIO.BCM)
+  GPIO.setmode(GPIO.BOARD)
   GPIO.setup(self.buzzer_pin, GPIO.OUT)
   x=0
 
