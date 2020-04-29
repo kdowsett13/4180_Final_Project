@@ -46,36 +46,28 @@ leg = .33# this tells me to keep it on
 turn = 0.33# how long the motors are on
 
 #set up control pins for motor driver
-STBY = 31
 AIN1 = 33
 AIN2 = 35
-PWMA = 37
 BIN1 = 32
 BIN2 = 36
-PWMB = 38
 
 GPIO.setmode(GPIO.BOARD)#use board pin numbers
 
 #set the GPIO's to outputs
-GPIO.setup(STBY, GPIO.OUT)
+
 GPIO.setup(BIN1, GPIO.OUT)
 GPIO.setup(AIN1, GPIO.OUT)
 GPIO.setup(AIN2, GPIO.OUT)
 GPIO.setup(BIN2, GPIO.OUT)
-GPIO.setup(PWMA, GPIO.OUT)
-GPIO.setup(PWMB, GPIO.OUT)
 
 #set initial condiions, STBY
 #is low, so no motors running
-GPIO.output(STBY, GPIO.LOW)
 
-GPIO.output(AIN1, GPIO.HIGH)
+GPIO.output(AIN1, GPIO.LOW)
 GPIO.output(AIN2, GPIO.LOW)
-GPIO.output(PWMA, GPIO.HIGH)
 
-GPIO.output(BIN1, GPIO.HIGH)
+GPIO.output(BIN1, GPIO.LOW)
 GPIO.output(BIN2, GPIO.LOW)
-GPIO.output(PWMB, GPIO.HIGH)
 
 #go into their own library, ultimately.
 def go_forward(run_time):
@@ -84,19 +76,25 @@ def go_forward(run_time):
     GPIO.output(BIN1, GPIO.LOW)
     GPIO.output(BIN2, GPIO.HIGH)
 
-    GPIO.output(STBY, GPIO.HIGH) #start
+  
     time.sleep(run_time)
-    GPIO.output(STBY, GPIO.LOW) #stop
 
+    GPIO.output(AIN1, GPIO.LOW)
+    GPIO.output(AIN2, GPIO.LOW)
+    GPIO.output(BIN1, GPIO.LOW)
+    GPIO.output(BIN2, GPIO.LOW)
 def turn_left(run_time):
     GPIO.output(AIN1, GPIO.HIGH)
     GPIO.output(AIN2, GPIO.LOW)
     GPIO.output(BIN1, GPIO.LOW)
     GPIO.output(BIN2, GPIO.HIGH)
 
-    GPIO.output(STBY, GPIO.HIGH) #start
+
     time.sleep(run_time)
-    GPIO.output(STBY, GPIO.LOW) #stop
+    GPIO.output(AIN1, GPIO.LOW)
+    GPIO.output(AIN2, GPIO.LOW)
+    GPIO.output(BIN1, GPIO.LOW)
+    GPIO.output(BIN2, GPIO.LOW)
 
 def turn_right(run_time):
     GPIO.output(AIN1, GPIO.LOW)
@@ -104,9 +102,11 @@ def turn_right(run_time):
     GPIO.output(BIN1, GPIO.HIGH)
     GPIO.output(BIN2, GPIO.LOW)
 
-    GPIO.output(STBY, GPIO.HIGH) #start
     time.sleep(run_time)
-    GPIO.output(STBY, GPIO.LOW) #stop
+    GPIO.output(AIN1, GPIO.LOW)
+    GPIO.output(AIN2, GPIO.LOW)
+    GPIO.output(BIN1, GPIO.LOW)
+    GPIO.output(BIN2, GPIO.LOW) #stop
 
 def reverse(run_time):
     GPIO.output(AIN1, GPIO.HIGH)
@@ -114,9 +114,11 @@ def reverse(run_time):
     GPIO.output(BIN1, GPIO.HIGH)
     GPIO.output(BIN2, GPIO.LOW)
 
-    GPIO.output(STBY, GPIO.HIGH) #start
     time.sleep(run_time)
-    GPIO.output(STBY, GPIO.LOW) #stop
+    GPIO.output(AIN1, GPIO.LOW)
+    GPIO.output(AIN2, GPIO.LOW)
+    GPIO.output(BIN1, GPIO.LOW)
+    GPIO.output(BIN2, GPIO.LOW) #stop
 
 
 #------------------------------------------------------------------------------------------sonar
@@ -260,73 +262,77 @@ home=False
 out=True
 try:
     while out:
-        
+        go_forward(leg)
+        time.sleep(.4)
+        reverse(leg)
+        time.sleep(.4)
+
         #--------------------------------------------
         
-        while (len(path)==0 ):
-            stage_one=True
-            print("Scann QR one ")
-        if len(path)==1 and tick ==0:
-            time.sleep(10)
-            tick=1
-            print("tick",tick)
+        # while (len(path)==0 ):
+        #     stage_one=True
+        #     print("Scann QR one ")
+        # if len(path)==1 and tick ==0:
+        #     time.sleep(10)
+        #     tick=1
+        #     print("tick",tick)
 
 
 
-        #print("this is len",len(path))
-        if stage_one == True:
-            print("st1 out dist",dist)
-            if dist  > 30 :#this lets us move fwr is nothing has been found in path
-                go_forward(leg)
-                print("stage one fwr")
-            else:
-                print("str else dist",dist)
+        # #print("this is len",len(path))
+        # if stage_one == True:
+        #     print("st1 out dist",dist)
+        #     if dist  > 30 :#this lets us move fwr is nothing has been found in path
+        #         go_forward(leg)
+        #         print("stage one fwr")
+        #     else:
+        #         print("str else dist",dist)
                
-                if dist < 10 and dist > 0:
-                    stage_one=False
-                    stage_two=True
-                    stage_three=False
+        #         if dist < 10 and dist > 0:
+        #             stage_one=False
+        #             stage_two=True
+        #             stage_three=False
 
 
 
                 
-        #--------------------------------------------
-        if stage_two == True:
-            print("stage2")
-            print(dist)
+        # #--------------------------------------------
+        # if stage_two == True:
+        #     print("stage2")
+        #     print(dist)
 
    
-            if dist  > 30 or dist < 0 :# if nothing is in path move fwr
-                #add a possible shake here 
-                go_forward(leg)
-            else:#this goes in when we hit the wall
-                while len(path)<2:
-                    print("in stg2 scan 2 QR")
+        #     if dist  > 30 or dist < 0 :# if nothing is in path move fwr
+        #         #add a possible shake here 
+        #         go_forward(leg)
+        #     else:#this goes in when we hit the wall
+        #         while len(path)<2:
+        #             print("in stg2 scan 2 QR")
 
-                    stage_two=False
-                    stage_three=True
-                if path[0]== "left":#this checks if the first scanns 
-                    turn_left(turn)
-                    time.sleep(10)
-                elif path[0]=="right":#this checks if need to turn right
-                    turn_right(turn)
-                    time.sleep(10)
+        #             stage_two=False
+        #             stage_three=True
+        #         if path[0]== "left":#this checks if the first scanns 
+        #             turn_left(turn)
+        #             time.sleep(10)
+        #         elif path[0]=="right":#this checks if need to turn right
+        #             turn_right(turn)
+        #             time.sleep(10)
 
-         #--------------------------------------------
-        if stage_three == True:#final stage we are going home
-            print("stage 3")
-            print(dist)
-            if dist > 30 and dist < 0 and home==False:
-                go_forward(leg)
-            else:
-                #might add a while loop to read the QR code
-                #we are home so we shake 
-                turn_right(2)
-                turn_left(2)
-                print("home")
-                home=True#we made it home 
-                stage_three=False#we exit stage 3
-                out=False#this is we are done 
+        #  #--------------------------------------------
+        # if stage_three == True:#final stage we are going home
+        #     print("stage 3")
+        #     print(dist)
+        #     if dist > 30 and dist < 0 and home==False:
+        #         go_forward(leg)
+        #     else:
+        #         #might add a while loop to read the QR code
+        #         #we are home so we shake 
+        #         turn_right(2)
+        #         turn_left(2)
+        #         print("home")
+        #         home=True#we made it home 
+        #         stage_three=False#we exit stage 3
+        #         out=False#this is we are done 
 
 
 
