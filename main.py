@@ -56,6 +56,24 @@ PWMB = 38
 
 GPIO.setmode(GPIO.BOARD)#use board pin numbers
 
+#led
+Blue = 16
+Green = 18
+Red = 40
+
+
+
+
+GPIO.setup(Blue,GPIO.OUT)
+GPIO.output(Blue,1)
+GPIO.setup(Green,GPIO.OUT)
+GPIO.output(Green,1)
+GPIO.setup(Red,GPIO.OUT)
+GPIO.output(Red,1)
+
+
+
+
 #set the GPIO's to outputs
 GPIO.setup(STBY, GPIO.OUT)
 GPIO.setup(BIN1, GPIO.OUT)
@@ -327,7 +345,12 @@ try:
                 home=True#we made it home 
                 stage_three=False#we exit stage 3
                 out=False#this is we are done 
-
+    light=[0,1,0,1,1,1,0,0,1,1,1,0]
+    l=[1,1,1,1]
+    for a in l:
+      GPIO.output(Blue,light[a])
+      GPIO.output(Green,[a+1])
+      GPIO.output(Red,[a+2])
 
 
 except KeyboardInterrupt:
