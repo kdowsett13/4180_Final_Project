@@ -378,14 +378,14 @@ try:
         go_forward(.1)
         turn_left(.01)
       if data=="r":
-        	light=[0,1,0,1,1,1,0,0,1,1,1,0]
-        	l=[0,3,6,9]
-      	  for a in l:
-            GPIO.output(Blue,light[a])
-      	    GPIO.output(Green,light[a+1])
-      	    GPIO.output(Red,light[a+2])
-      	    print(light[a],light[a+1],light[a+2])
-      	    buzzer.play(2)
+        light=[0,1,0,1,1,1,0,0,1,1,1,0]
+        l=[0,3,6,9]
+        for a in l:
+          GPIO.output(Blue,light[a])
+    	    GPIO.output(Green,light[a+1])
+    	    GPIO.output(Red,light[a+2])
+    	    print(light[a],light[a+1],light[a+2])
+    	    buzzer.play(2)
 	
 
 
