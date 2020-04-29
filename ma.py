@@ -382,9 +382,9 @@ try:
         l=[0,3,6,9]
         for a in l:
           GPIO.output(Blue,light[a])
-    	    GPIO.output(Green,light[a+1])
-    	    GPIO.output(Red,light[a+2])
-    	    print(light[a],light[a+1],light[a+2])
+          GPIO.output(Green,light[a+1])
+          GPIO.output(Red,light[a+2])
+          print(light[a],light[a+1],light[a+2]) 
     	  buzzer.play(2)
 	
 
