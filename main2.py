@@ -263,9 +263,12 @@ out=True
 try:
     while out:
         go_forward(leg)
+        print("foward")
         time.sleep(.4)
         reverse(leg)
+        print("reverse")
         time.sleep(.4)
+
 
         #--------------------------------------------
         
