@@ -58,7 +58,7 @@ GPIO.setmode(GPIO.BOARD)#use board pin numbers
 
 #led
 Blue = 16
-Green = 18
+Green = 22
 Red = 40
 
 
@@ -346,7 +346,7 @@ try:
                 stage_three=False#we exit stage 3
                 out=False#this is we are done 
     light=[0,1,0,1,1,1,0,0,1,1,1,0]
-    l=[1,1,1,1]
+    l=[0,3,6,9]
     for a in l:
       GPIO.output(Blue,light[a])
       GPIO.output(Green,[a+1])

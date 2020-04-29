@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BOARD)
-
+import time
 Blue = 16
-Green = 18
+Green = 22
 Red = 40
 
 
@@ -15,19 +15,19 @@ GPIO.output(Green,1)
 GPIO.setup(Red,GPIO.OUT)
 GPIO.output(Red,1)
 
-light=[0,1,0,1,1,1,0,0,1,1,1,0]
-l=[1,1,1,1]
-for a in l:
-  GPIO.output(Blue,light[a])
-  GPIO.output(Green,[a+1])
-  GPIO.output(Red,[a+2])
+
 
 try:
   while True:
-    if GPIO.input(18):
-      print("white")
-    else:
-      print("black")
+      light=[0,1,0,1,1,1,0,0,1,1,1,0]
+      l=[0,3,6,9]
+      for a in l:
+          GPIO.output(Blue,light[a])
+          GPIO.output(Green,light[a+1])
+          GPIO.output(Red,light[a+2])
+          print(light[a],light[a+1],light[a+2])
+          time.sleep(2)
+    
 
 finally:
   print('clean up')
