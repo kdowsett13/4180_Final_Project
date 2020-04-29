@@ -183,7 +183,7 @@ def go_forward(run_time):
     GPIO.output(STBY, GPIO.HIGH) #start
     time.sleep(run_time)
     GPIO.output(STBY, GPIO.LOW) #stop
-    time.sleep(.05)
+    time.sleep(.04)
 def turn_left(run_time):
     GPIO.output(AIN1, GPIO.HIGH)
     GPIO.output(AIN2, GPIO.LOW)
