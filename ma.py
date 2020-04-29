@@ -183,7 +183,6 @@ def go_forward(run_time):
     GPIO.output(STBY, GPIO.HIGH) #start
     time.sleep(run_time)
     GPIO.output(STBY, GPIO.LOW) #stop
-    time.sleep(.03)
 def turn_left(run_time):
     GPIO.output(AIN1, GPIO.HIGH)
     GPIO.output(AIN2, GPIO.LOW)
@@ -357,12 +356,12 @@ out=True
 try:
     while out:
       data = raw_input("What's your profession?")
-      if data=="l":
-        turn_left(turn)
-      if data=="r":
-        turn_right(turn)
-      if data=="f":
-        go_forward(leg)
+      if data=="a":
+        turn_left(.01)
+      if data=="d":
+        turn_right(.01)
+      if data=="w":
+        go_forward(1)
       if data == "h":
         turn_right(1)
         turn_left(1)
