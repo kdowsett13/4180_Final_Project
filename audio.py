@@ -83,4 +83,5 @@ if __name__ == "__main__":
   buzzer = Buzzer()
   for a in audio:
     buzzer.play(int(a))
+    time.sleep(2)
   

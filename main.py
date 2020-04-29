@@ -1,4 +1,4 @@
-
+# coding: utf-8
 '''
 Developer:Jose Sanchez
 Date: 04/14/2020

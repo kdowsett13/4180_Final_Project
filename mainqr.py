@@ -42,7 +42,7 @@ import RPi.GPIO as GPIO
 import time
 
 #a couple of delay constants time to 
-leg = .1# this tells me to keep it on 
+leg = .01# this tells me to keep it on 
 turn = 0.33# how long the motors are on
 
 #set up control pins for motor driver
@@ -165,11 +165,13 @@ GPIO.output(STBY, GPIO.LOW)
 #Defining PWM
 GPIO.output(AIN1, GPIO.HIGH)
 GPIO.output(AIN2, GPIO.LOW)
-GPIO.PWM(PWMA, 100)
+GPIO.output(PWMA, GPIO.HIGH)#left
+#GPIO.PWM(PWMA, 300)
 
 GPIO.output(BIN1, GPIO.HIGH)
 GPIO.output(BIN2, GPIO.LOW)
-GPIO.PWM(PWMB, 1)
+GPIO.output(PWMB, GPIO.HIGH)#right
+#GPIO.PWM(PWMB, 800)
 
 #go into their own library, ultimately.
 def go_forward(run_time):
@@ -181,7 +183,7 @@ def go_forward(run_time):
     GPIO.output(STBY, GPIO.HIGH) #start
     time.sleep(run_time)
     GPIO.output(STBY, GPIO.LOW) #stop
-
+    time.sleep(.05)
 def turn_left(run_time):
     GPIO.output(AIN1, GPIO.HIGH)
     GPIO.output(AIN2, GPIO.LOW)
@@ -361,10 +363,10 @@ try:
             stage_one=True
             print("Scann QR one ")
             if len(path)==0 :
-              time.sleep(5)
+              time.sleep(.01)
               path.append("right")
         if len(path)==1 and tick ==0:
-            time.sleep(10)
+            time.sleep(0.1)
             tick=1
             print("tick",tick)
 
@@ -373,13 +375,13 @@ try:
         #print("this is len",len(path))
         if stage_one == True:
             print("st1 out dist",dist)
-            if dist  > 40 :#this lets us move fwr is nothing has been found in path
+            if dist  > 30 :#this lets us move fwr is nothing has been found in path
                 go_forward(leg)
                 print("stage one fwr")
             else:
                 print("str else dist",dist)
                
-                if dist < 10 and dist > 0:
+                if dist < 30 and dist > 0:
                     stage_one=False
                     stage_two=True
                     stage_three=False
@@ -393,10 +395,10 @@ try:
             print(dist)
 
    
-            if dist  > 40 or dist < 0 :# if nothing is in path move fwr
+            if dist  > 30 or dist < 0 :# if nothing is in path move fwr
                 #add a possible shake here 
                 go_forward(leg)
-            else:#this goes in when we hit the wall
+            elif dist < 30 and dist > 0:#this goes in when we hit the wall
                 while len(path)<2:
                     print("in stg2 scan 2 QR")
 
@@ -417,9 +419,12 @@ try:
         if stage_three == True:#final stage we are going home
             print("stage 3")
             print(dist)
-            if dist > 40 and dist < 0 and home==False:
+            print(home)
+            if dist > 30 and dist < 0 and home==False:
                 go_forward(leg)
-            else:
+                print("fwr")
+                
+            elif dist < 30 and dist > 0:
                 #might add a while loop to read the QR code
                 #we are home so we shake 
                 turn_right(2)
