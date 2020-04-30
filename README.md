@@ -18,16 +18,18 @@ Give examples
 ```
 
 ## Parts used
+
+
 ###:
 
-1.Raspberry pi 3
-2.Sonar
-3.Pi camera
-4.Google cloud
-5.RGB LED
-6.H-bridge
-7.Power Pack
-8.2x DC motors
+1. Raspberry pi 3
+2. Sonar
+3. Pi camera
+4. Google cloud
+5. RGB LED
+6. H-bridge
+7. Power Pack
+8. 2x DC motors
 
 #### 
 
