@@ -8,10 +8,10 @@ Idea: The Robot is simulating an automation robot at a shipping facility or fact
 
 ### The code requirements are:
 
-1. The Robot should follow a predetermined path.
-2. We should be able to scan QR codes and determine a path.
-3. The Robot should avoid obstacles.
-4. Perform cool audio and lights. 
+* The Robot should follow a predetermined path.
+* We should be able to scan QR codes and determine a path.
+* The Robot should avoid obstacles.
+* Perform cool audio and lights. 
 
 ### Parts used:
 
@@ -56,9 +56,9 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Dropwizard](opencv.org) - Used to decode QR codes
+* [Zbar](https://pypi.org/project/zbar/) - Barcode scanning
+* [ROME](https://www.raspberrypi.org/) - Used as our micro controller
 
 ## Contributing
 
