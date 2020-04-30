@@ -1,6 +1,6 @@
 #4180_Final_Project
 
-Idea: The Robot is simulating an automation robot at a shipping facility or factory.
+Idea: The Robot is simulating an autonomous robot at a shipping facility or factory.
 
 ## Getting Started
 
@@ -9,21 +9,22 @@ Idea: The Robot is simulating an automation robot at a shipping facility or fact
 ### The code requirements are:
 
 * The Robot should follow a predetermined path.
-* We should be able to scan QR codes and determine a path.
+* We should be able to scan QR codes and interpret them to determine the next action.
 * The Robot should avoid obstacles.
-* Perform cool audio and lights. 
+* Emit festive audio and blink lights when QR codes are read successfully. 
 
 ### Parts used:
 
 
-1. Raspberry pi 3
-2. Sonar
-3. Pi camera
-4. Google cloud
+1. Raspberry Pi 3
+2. Sonar (ultrasonic rangefinder)
+3. Pi camera V2
+4. Google Cloud
 5. RGB LED
-6. H-bridge
-7. Power Pack
-8. 2x DC motors
+6. H-bridge Motor Driver
+7. Power Pack (4x AA)
+8. DC motors (2x)
+9. Speaker w/ 2N3904 NPN Amp
 
 #### 
 
@@ -33,13 +34,17 @@ Idea: The Robot is simulating an automation robot at a shipping facility or fact
 
 [Demo Link click here ](link)
 
-## Running the tests
 
-Explain how to run the automated tests for this system
+### Break down
 
-### Break down into end to end tests
+In general, the sonar and H-bridge proved the most diffult to calibrate, given sub-optimal (remote) working conditions.
 
-The sonar and h-bridge was the most diffult to calibrate with limited resources.
+As is explained further in the following summary and demonstration video, the code in this repository allows a simple mobile robot to navigate a simple environment using a combination of sonar range data and camera feedback.
+
+As can be surmised thru the demonstration, in order to accomplish the simple goal of the demonstration, several aspects were hard-coded to match the specific environment. 
+
+A piece of the code is dedicated to trouble shooting misalignments between target QR codes and the camera’s field of view. 
+
 
 ```
 #Libraries
@@ -112,8 +117,8 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Authors
 
-* **Jose Samchez**
-* **Keith Jones**
+* **Jose Sanchez**
+* **Keith Dowsett**
 
 
 ## License
