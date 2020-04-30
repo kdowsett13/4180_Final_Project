@@ -72,14 +72,13 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 * **JoseSamchez* 
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+*
 
 ## Acknowledgments
 
 * https://www.youtube.com/watch?v=L90WS-ptnvI
-* Inspiration
-* etc
+* [DC motors] (https://www.instructables.com/id/Raspberry-PI-L298N-Dual-H-Bridge-DC-Motor/)- H-bridge setup
+
