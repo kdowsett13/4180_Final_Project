@@ -8,7 +8,6 @@ Idea: The Robot is simulating an automation robot at a shipping facility or fact
 
 ### The code requirements are:
 
-
 1. The Robot should follow a predetermined path.
 2. We should be able to scan QR codes and determine a path.
 3. The Robot should avoid obstacles.
@@ -18,7 +17,6 @@ Give examples
 ```
 
 ### Parts used:
-
 
 1.Raspberry pi 3
 2.Sonar
