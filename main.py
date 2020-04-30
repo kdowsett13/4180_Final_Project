@@ -7,6 +7,7 @@ notes: this will be our main code that will execute:
 2.will keep track of the path 
 3.drive the motor and steer 
 4. use open CV for image deteccting along with zbar
+5. if time allows connet to google server 
 
 
 
@@ -391,11 +392,14 @@ try:
 
    
             if dist  > 30 or dist < 0 :# if nothing is in path move fwr
-                #add a possible shake here 
+            
                 go_forward(leg)
             else:#this goes in when we hit the wall
                 while len(path)<2:
                     print("in stg2 scan 2 QR")
+                    turn_right(.2)
+                    turn_left(.2)
+                    #scan around for objects and qr codes 
 
                     stage_two=False
                     stage_three=True
@@ -421,12 +425,15 @@ try:
                 home=True#we made it home 
                 stage_three=False#we exit stage 3
                 out=False#this is we are done 
+
+    #---------------light show 
     light=[0,1,0,1,1,1,0,0,1,1,1,0]
     l=[0,3,6,9]
     for a in l:
       GPIO.output(Blue,light[a])
       GPIO.output(Green,[a+1])
       GPIO.output(Red,[a+2])
+    #---------------Play  audio to celebrate we are home and ready to graduate 
     audio= [1,5,2,4,3]
     buzzer = Buzzer()
     for a in audio:
