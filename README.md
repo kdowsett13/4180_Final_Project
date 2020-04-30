@@ -28,7 +28,10 @@ Idea: The Robot is simulating an automation robot at a shipping facility or fact
 #### 
 
 
-End with an example of getting some  demo
+
+## Deployment Demo Link
+
+[Demo Link click here ](link)
 
 ## Running the tests
 
@@ -94,9 +97,6 @@ if __name__ == '__main__':
         GPIO.cleanup()
 ```
 
-## Deployment
-
-[Demo](link)
 
 ## Built With
 
