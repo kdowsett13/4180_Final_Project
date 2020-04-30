@@ -80,6 +80,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
+* https://www.youtube.com/watch?v=L90WS-ptnvI
 * Inspiration
 * etc
