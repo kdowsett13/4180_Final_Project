@@ -266,8 +266,8 @@ def distance():
 # initialize the video stream and allow the camera sensor to warm up
 print("starting video stream..")
 #vs = VideoStream(src=0).start()# this is for testing with a web cam not in use. We didn't have anymore equipment
-#vs = VideoStream(usePiCamera=True).start()
-#time.sleep(2.0)
+vs = VideoStream(usePiCamera=True).start()
+time.sleep(2.0)
 
 #------------------------------------------------------------------------------------------
    
@@ -332,7 +332,7 @@ def imageRec():
 
 
 #create threads
-#videoThread = threading.Thread(target=imageRec) 
+videoThread = threading.Thread(target=imageRec) 
 
 distaceThread = threading.Thread(target=distance) 
 
@@ -402,12 +402,14 @@ try:
 	    #buzzer = Buzzer()
 	    #buzzer.play(3)  
             if dist  > 30 or dist < 0 :# if nothing is in path move fwr
-                #add a possible shake here 
+                
                 go_forward(leg)
-		#time.sleep(.03)
+		
             elif dist < 30 and dist > 0:#this goes in when we hit the wall
                 while len(path)<2:
-                    print("in stg2 scan 2 QR")
+
+                    turn_left(.3)#we scan for qr code 
+                    turn_right(.3)
 
                     stage_two=False
                     stage_three=True
@@ -441,6 +443,7 @@ try:
                 home=True#we made it home 
                 stage_three=False#we exit stage 3
                 out=False#this is we are done 
+    #play pattern of RGB light 
     light=[0,1,0,1,1,1,0,0,1,1,1,0]
     l=[0,3,6,9]
     for a in l:
@@ -449,6 +452,8 @@ try:
       GPIO.output(Red,light[a+2])
       print(light[a],light[a+1],light[a+2])
       time.sleep(2)
+
+    #play our sounds 
     audio= [1,5,2,4,3]
     buzzer = Buzzer()
     for a in audio:
@@ -457,7 +462,7 @@ try:
 
 except KeyboardInterrupt:
     exit=True
-    #videoThread.join()
+    videoThread.join()
     print("thread vide done")
     distaceThread.join()
     print("distance done")
@@ -468,7 +473,7 @@ except KeyboardInterrupt:
 
 finally:
     exit=True
-    #videoThread.join()
+    videoThread.join()
     print("thread vide done")
     distaceThread.join()
     print("distance done")
